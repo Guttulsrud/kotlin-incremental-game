@@ -3,7 +3,7 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
-    <color name="footballGreen">#00EC00</color>
+    <color name="footballGreen">#009E00</color>
     <color name="footballWhite">#fff</color>
     <color name="statusBarBlack">#000</color>
 </resources>
