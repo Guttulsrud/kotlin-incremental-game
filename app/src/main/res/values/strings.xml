@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Incremental</string>
+    <string name="cookies">Cookies</string>
+    <string name="cpm">CPM</string>
 </resources>
