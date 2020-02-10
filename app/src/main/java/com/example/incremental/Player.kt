@@ -3,7 +3,7 @@ package com.example.incremental
 class Player {
     private var points:Long = 0
     private var clickStrength = 1
-    private interface bonusEntities<BonusEntity> : Collection<BonusEntity>
+    private val bonusEntities = mutableSetOf<BonusEntity>()
     private var totalPoints:Long = 0
     private var totalClicks = 0
 
@@ -18,5 +18,11 @@ class Player {
     }
     fun boughtItem(price:Int){
         this.points -= price
+    }
+    fun addClickSrength(percentIncrease:Int){
+        this.clickStrength = clickStrength * (1+(percentIncrease/100))
+    }
+    fun addBonusEntity(entity: BonusEntity){
+        bonusEntities.add(entity)
     }
 }
