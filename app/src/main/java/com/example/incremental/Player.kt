@@ -8,7 +8,7 @@ class Player {
     private var totalClicks = 0
 
 
-    fun click(){
+    fun clicazk(){
         this.points += clickStrength
         this.totalPoints += clickStrength
         this.totalClicks++
