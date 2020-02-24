@@ -8,7 +8,6 @@ class Player {
     private var totalPoints:ULong = 0.toULong()
     private var totalClicks = 0
 
-
     fun click(){
         this.points += clickStrength + this.getBonusEntities().elementAt(0).getBonus()
 
