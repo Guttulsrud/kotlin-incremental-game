@@ -4,7 +4,7 @@ package com.example.incremental
 class BonusEntity (name:String, bonus:Int, price:Int, amountOwned:Int){
     private val name:String
     private val defaultBonusPerSecond:Int
-    private val price:Int
+    private var price:Int
     private var amountOwned:Int
 //    private var multiplier:Float = 1.0f
 //    private val image
@@ -20,8 +20,7 @@ class BonusEntity (name:String, bonus:Int, price:Int, amountOwned:Int){
         return this.name
     }
     fun getBonus():Int{
-//        return (this.defaultBonusPerSecond*this.amountOwned*this.multiplier).toInt()
-        return (this.defaultBonusPerSecond*this.amountOwned).toInt()
+        return this.defaultBonusPerSecond*this.amountOwned
     }
     fun getDefaultBonus():Int{
         return this.defaultBonusPerSecond
@@ -34,6 +33,7 @@ class BonusEntity (name:String, bonus:Int, price:Int, amountOwned:Int){
     }
     fun boughtNew(amount:Int){
         this.amountOwned+=amount
+        this.price += price/10
     }
 //    fun increaseMultiplier(percentIncrease:Int){
 //        this.multiplier = multiplier*(1+(percentIncrease/100))

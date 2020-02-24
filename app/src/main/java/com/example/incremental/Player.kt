@@ -4,13 +4,15 @@ class Player {
     private var points:Long = 0
     private var clickStrength = 1
     private val bonusEntities = mutableSetOf<BonusEntity>()
-    private var totalPoints:Long = 0
+    @kotlin.ExperimentalUnsignedTypes
+    private var totalPoints:ULong = 0.toULong()
     private var totalClicks = 0
 
 
-    fun clicazk(){
-        this.points += clickStrength
-        this.totalPoints += clickStrength
+    fun click(){
+        this.points += clickStrength + this.getBonusEntities().elementAt(0).getBonus()
+
+        this.totalPoints += clickStrength.toUInt()
         this.totalClicks++
     }
     fun getPoints():Long{
@@ -19,10 +21,13 @@ class Player {
     fun boughtItem(price:Int){
         this.points -= price
     }
-    fun addClickSrength(percentIncrease:Int){
-        this.clickStrength = clickStrength * (1+(percentIncrease/100))
+    fun addClickSrength(increase:Int){
+        this.clickStrength += increase
     }
     fun addBonusEntity(entity: BonusEntity){
         bonusEntities.add(entity)
+    }
+    fun getBonusEntities(): Set<BonusEntity> {
+        return this.bonusEntities
     }
 }
