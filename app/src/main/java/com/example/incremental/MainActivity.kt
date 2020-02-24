@@ -33,6 +33,9 @@ class MainActivity : AppCompatActivity() {
                 grandmaButton.text = "Grandma: " + player.getBonusEntities().elementAt(0).getPrice().toString() +" points"
             }
         }
+        this.openFileOutput("userFile", Context.MODE_PRIVATE).use {
+            it.write(gson.toJson(player).toByteArray())
+        }
 
     }
 
@@ -46,6 +49,9 @@ class MainActivity : AppCompatActivity() {
 
 
     override fun onResume() {
+
+
+
         val loadedUser = this.openFileInput("userFile").bufferedReader().useLines { lines ->
             lines.fold("") { some, text ->
                 "$some\n$text"
