@@ -2,6 +2,7 @@ package com.example.incremental
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -10,12 +11,10 @@ class MainActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        
         val player = Player()
         val grandma = BonusEntity("Grandma", 1, 100, 0)
         player.addBonusEntity(grandma)
         grandmaButton.text = "Grandma: " + player.getBonusEntities().elementAt(0).getPrice().toString() +" points"
-
 
         textView.text = "0"
         button.setOnClickListener {
