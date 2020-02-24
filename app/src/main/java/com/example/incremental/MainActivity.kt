@@ -2,8 +2,6 @@ package com.example.incremental
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.room.Room
-import com.example.incremental.db.AppDatabase
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -17,12 +15,6 @@ class MainActivity : AppCompatActivity() {
         val grandma = BonusEntity("Grandma", 1, 100, 0)
         player.addBonusEntity(grandma)
         grandmaButton.text = "Grandma: " + player.getBonusEntities().elementAt(0).getPrice().toString() +" points"
-
-
-//        val dB = Room.databaseBuilder(
-//            applicationContext,
-//            AppDatabase::class.java, "database-name"
-//        ).build()
 
 
         textView.text = "0"
