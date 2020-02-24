@@ -1,8 +1,9 @@
 package com.example.incremental
 
 import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -23,7 +24,14 @@ class MainActivity : AppCompatActivity() {
             textView.text = player.getPoints().toString()
         }
 
-
+        store_button.setOnClickListener {
+            val intent = Intent(this, StoreActivity::class.java)
+            startActivity(intent)
+        }
+        stats_button.setOnClickListener {
+            val intent = Intent(this, StatsActivity:: class.java)
+            startActivity(intent)
+        }
         grandmaButton.setOnClickListener {
             if (player.getPoints() >= player.getBonusEntities().elementAt(0).getPrice()) {
                 player.boughtItem(player.getBonusEntities().elementAt(0).getPrice())
