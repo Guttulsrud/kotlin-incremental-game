@@ -1,32 +1,56 @@
 package com.example.incremental
 
 class Player {
-    private var points:Long = 0
+    private var points: Int = 0
     private var clickStrength = 1
     private val bonusEntities = mutableSetOf<BonusEntity>()
-    @kotlin.ExperimentalUnsignedTypes
-    private var totalPoints:ULong = 0.toULong()
+    private var totalPoints: Int = 0
     private var totalClicks = 0
 
-    fun click(){
+    fun click() {
         this.points += clickStrength + this.getBonusEntities().elementAt(0).getBonus()
 
-        this.totalPoints += clickStrength.toUInt()
+        this.totalPoints += clickStrength
         this.totalClicks++
     }
-    fun getPoints():Long{
+
+    fun getPoints(): Int {
         return this.points
     }
-    fun boughtItem(price:Int){
+
+    fun getTotalPoints(): Int {
+        return this.totalPoints
+    }
+
+    fun getTotalClicks(): Int {
+        return this.totalClicks
+    }
+
+    fun getClickStrength(): Int {
+        return this.clickStrength
+    }
+
+
+    fun boughtItem(price: Int) {
         this.points -= price
     }
-    fun addClickSrength(increase:Int){
-        this.clickStrength += increase
+
+    fun increaseClickStrength(increaseWith: Int) {
+        this.clickStrength += increaseWith
     }
-    fun addBonusEntity(entity: BonusEntity){
+
+    fun addBonusEntity(entity: BonusEntity) {
         bonusEntities.add(entity)
     }
+
     fun getBonusEntities(): Set<BonusEntity> {
         return this.bonusEntities
+    }
+
+    fun updateFromDb(points:Int, strength: Int, totalPoints: Int, totalClicks: Int) {
+        this.points = points
+        this.clickStrength = strength
+        this.totalPoints = totalPoints
+        this.totalClicks = totalClicks
     }
 }

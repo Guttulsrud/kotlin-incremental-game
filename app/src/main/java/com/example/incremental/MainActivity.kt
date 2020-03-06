@@ -1,21 +1,26 @@
 package com.example.incremental
 
-import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.google.gson.Gson
+import android.widget.Toast
+import com.example.incremental.db.UserDAO
 import kotlinx.android.synthetic.main.activity_main.*
+import java.lang.Exception
 
 class MainActivity : AppCompatActivity() {
     private var player = Player()
-    private val gson = Gson()
+
+
+    private lateinit var userDao: UserDAO
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         val grandma = BonusEntity("Grandma", 1, 100, 0)
         player.addBonusEntity(grandma)
-        grandmaButton.text = "Grandma: " + player.getBonusEntities().elementAt(0).getPrice().toString() +" points"
+        grandmaButton.text =
+            "Grandma: " + player.getBonusEntities().elementAt(0).getPrice().toString() + " points"
 
         textView.text = "0"
         button.setOnClickListener {
@@ -30,38 +35,45 @@ class MainActivity : AppCompatActivity() {
                 textView.text = player.getPoints().toString()
                 player.getBonusEntities().elementAt(0).boughtNew(1)
                 grandmas.text = player.getBonusEntities().elementAt(0).getAmoutOwned().toString()
-                grandmaButton.text = "Grandma: " + player.getBonusEntities().elementAt(0).getPrice().toString() +" points"
+                grandmaButton.text =
+                    "Grandma: " + player.getBonusEntities().elementAt(0).getPrice().toString() + " points"
             }
-        }
-        this.openFileOutput("userFile", Context.MODE_PRIVATE).use {
-            it.write(gson.toJson(player).toByteArray())
         }
 
     }
 
     override fun onPause() {
-        this.openFileOutput("userFile", Context.MODE_PRIVATE).use {
-            it.write(gson.toJson(player).toByteArray())
-        }
+
+
+        userDao = UserDAO(this)
+        var user = userDao.getAllUsers()[0]
+
+        userDao.update(
+            user,
+            player.getPoints(),
+            player.getClickStrength(),
+            player.getTotalPoints(),
+            player.getTotalClicks()
+        )
+
+
 
         super.onPause()
     }
 
 
     override fun onResume() {
+        userDao = UserDAO(this)
 
+        val user = userDao.getAllUsers()[0]
 
-
-        val loadedUser = this.openFileInput("userFile").bufferedReader().useLines { lines ->
-            lines.fold("") { some, text ->
-                "$some\n$text"
-            }
-        }
-        player = gson.fromJson(loadedUser, Player::class.java)
-        grandmaButton.text = "Grandma: " + player.getBonusEntities().elementAt(0).getPrice().toString() +" points"
+        player.updateFromDb(user.points, user.clickStrength, user.totalPoints, user.totalClicks)
+        grandmaButton.text =
+            "Grandma: " + player.getBonusEntities().elementAt(0).getPrice().toString() + " points"
         textView.text = player.getPoints().toString()
         grandmas.text = player.getBonusEntities().elementAt(0).getAmoutOwned().toString()
 
         super.onResume()
     }
+
 }
